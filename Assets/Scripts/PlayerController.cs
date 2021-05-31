@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator ani;
 
-    private void start()
+    void Start()
     {
         ani = GetComponent<Animator>();
     }
@@ -32,11 +32,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OncollisionEenter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if(collision.collider.tag == "Obstacle")
         {
             ani.SetTrigger("damage");
+
+            GameManager.instance.AddScore(-1);
+        }
+
+        if (collision.collider.tag == "Enermy")
+        {
+            ani.SetTrigger("attack01");
+
+            GameManager.instance.OnPlayerDead();
         }
     }
 }
